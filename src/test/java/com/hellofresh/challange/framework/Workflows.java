@@ -2,6 +2,7 @@ package com.hellofresh.challange.framework;
 
 import static junit.framework.TestCase.assertTrue;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.hellofresh.challange.commons.User;
@@ -54,4 +55,32 @@ public class Workflows {
 		framework.getDriver().findElement(framework.pages.Authentication.inputSubmitAccount()).click();
 
 	}
+
+	public boolean signInUser(User user) {
+
+		if (isSignedIn())
+			return true;
+
+		framework.getWait().until(ExpectedConditions.visibilityOfElementLocated(By.className("login"))).click();
+		framework.getDriver().findElement(By.id("email")).sendKeys(user.email);
+		framework.getDriver().findElement(By.id("passwd")).sendKeys(user.passwd);
+		framework.getDriver().findElement(By.id("SubmitLogin")).click();
+
+		return isSignedIn();
+	}
+
+	public boolean logoutUser() {
+		if (isSignedIn()) {
+			framework.pages.Account.goTo();
+			framework.getWait()
+					.until(ExpectedConditions.visibilityOfElementLocated(framework.pages.Account.input_logout()))
+					.click();
+		}
+		return false;
+	}
+
+	public boolean isSignedIn() {
+		return framework.pages.Any.execScript("return isLogged").equals("1");
+	}
+
 }

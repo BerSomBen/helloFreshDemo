@@ -23,6 +23,15 @@ public class User {
 	public String phone_mobile;
 	public String alias;
 
+	public static User getExistingUser() {
+		String existingUserEmail = "hf_challenge_123456@hf12345.com";
+		String existingUserPassword = "12345678";
+		String firstname = "Joe";
+		String lastname = "Black";
+
+		return new User(existingUserEmail, existingUserPassword, firstname, lastname);
+	}
+
 	public static User generateUnique() {
 		User temp = new User();
 		temp.timestamp = String.valueOf(new Date().getTime());
@@ -47,4 +56,22 @@ public class User {
 		return temp;
 	}
 
+	public String getFullName() {
+		return this.name + " " + this.surname;
+	}
+
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public User(String mail, String pass) {
+		this.email = mail;
+		this.passwd = pass;
+	}
+
+	public User(String mail, String pass, String name, String surname) {
+		this(mail, pass);
+		this.name = name;
+		this.surname = surname;
+	}
 }

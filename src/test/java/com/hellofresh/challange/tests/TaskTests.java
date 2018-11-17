@@ -2,6 +2,7 @@ package com.hellofresh.challange.tests;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -46,6 +47,25 @@ public class TaskTests {
 		assertTrue(driver.findElement(By.className("logout")).isDisplayed());
 		assertTrue(driver.getCurrentUrl().contains("controller=my-account"));
 		assertEquals("1", framework.pages.Authentication.execScript("return isLogged;"));
+	}
+
+	@Test
+	public void logInTest() {
+		User user = User.getExistingUser();
+		
+		if (framework.workflows.isSignedIn())
+			framework.workflows.logoutUser();
+		
+		if (framework.workflows.signInUser(user)) {
+
+			WebElement heading = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("h1")));
+			assertEquals("MY ACCOUNT", heading.getText());
+			assertEquals(user.getFullName(), driver.findElement(By.className("account")).getText());
+			assertTrue(driver.findElement(By.className("info-account")).getText().contains("Welcome to your account."));
+			assertTrue(driver.findElement(By.className("logout")).isDisplayed());
+			assertTrue(driver.getCurrentUrl().contains("controller=my-account"));
+		} else
+			fail("not logged in");
 	}
 
 }
