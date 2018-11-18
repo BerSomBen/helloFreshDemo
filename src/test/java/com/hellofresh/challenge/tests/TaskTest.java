@@ -17,20 +17,27 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.hellofresh.challenge.commons.Article;
 import com.hellofresh.challenge.commons.ScreenshotTestRule;
 import com.hellofresh.challenge.commons.Settings;
-import com.hellofresh.challenge.commons.User;
-import com.hellofresh.challenge.enums.Payment;
-import com.hellofresh.challenge.enums.Shipping;
-import com.hellofresh.challenge.framework.Framework;
+import com.hellofresh.challenge.entitys.Article;
+import com.hellofresh.challenge.entitys.Payment;
+import com.hellofresh.challenge.entitys.Shipping;
+import com.hellofresh.challenge.entitys.User;
+import com.hellofresh.challenge.framework.AutomationPracticeFramework;
 import com.hellofresh.challenge.utils.WebdriverFactory;
 
+/**
+ * Tasks given by hello fresh implemented in page pattern with action workflows
+ * and screenshot rule
+ * 
+ * @author benja
+ *
+ */
 public class TaskTest {
 
 	static WebDriver driver;
 	static WebDriverWait wait;
-	static Framework framework;
+	static AutomationPracticeFramework framework;
 	static User user;
 
 	@Rule
@@ -40,11 +47,11 @@ public class TaskTest {
 	public static void setUp() {
 		PropertyConfigurator.configure("log4j.properties");
 		Settings.load();
-		
-		driver = WebdriverFactory.getDriver(Settings.browser);
+
+		driver = WebdriverFactory.getDriver(Settings.BROWSER);
 		wait = new WebDriverWait(driver, 10, 50);
 
-		framework = new Framework(driver, wait);
+		framework = new AutomationPracticeFramework(driver, wait);
 
 		user = User.generateUnique();
 	}
@@ -52,24 +59,24 @@ public class TaskTest {
 	@Test
 	public void signInTest() {
 
-		framework.workflows.signUpUser(user);
+		framework.getWorkflows().signUpUser(user);
 		WebElement heading = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("h1")));
 		assertEquals(heading.getText(), "MY ACCOUNT");
 		assertEquals(driver.findElement(By.className("account")).getText(), user.name + " " + user.surname);
 		assertTrue(driver.findElement(By.className("info-account")).getText().contains("Welcome to your account."));
 		assertTrue(driver.findElement(By.className("logout")).isDisplayed());
 		assertTrue(driver.getCurrentUrl().contains("controller=my-account"));
-		assertEquals("1", framework.pages.Authentication.execScript("return isLogged;"));
+		assertEquals("1", framework.getPages().Authentication.execScript("return isLogged;"));
 	}
 
 	@Test
 	public void logInTest() {
 		User user = User.getExistingUser();
 
-		if (framework.workflows.isSignedIn())
-			framework.workflows.logoutUser();
+		if (framework.getWorkflows().isSignedIn())
+			framework.getWorkflows().logoutUser();
 
-		if (framework.workflows.signInUser(user)) {
+		if (framework.getWorkflows().signInUser(user)) {
 
 			WebElement heading = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("h1")));
 			assertEquals("MY ACCOUNT", heading.getText());
@@ -89,7 +96,7 @@ public class TaskTest {
 		List<Article> articles = new ArrayList<Article>();
 		articles.add(Article.getDefaultArticle());
 
-		framework.workflows.checkout(user, bank, std, articles);
+		framework.getWorkflows().checkout(user, bank, std, articles);
 
 		WebElement heading = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("h1")));
 

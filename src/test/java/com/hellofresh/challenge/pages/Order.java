@@ -10,8 +10,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.hellofresh.challenge.commons.AbstractPage;
 import com.hellofresh.challenge.commons.Settings;
-import com.hellofresh.challenge.enums.Payment;
-import com.hellofresh.challenge.enums.Shipping;
+import com.hellofresh.challenge.entitys.Payment;
+import com.hellofresh.challenge.entitys.Shipping;
 
 public class Order extends AbstractPage {
 

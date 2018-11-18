@@ -7,60 +7,92 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import com.hellofresh.challenge.commons.Article;
-import com.hellofresh.challenge.commons.User;
-import com.hellofresh.challenge.enums.Payment;
-import com.hellofresh.challenge.enums.Shipping;
+import com.hellofresh.challenge.entitys.Article;
+import com.hellofresh.challenge.entitys.Payment;
+import com.hellofresh.challenge.entitys.Shipping;
+import com.hellofresh.challenge.entitys.User;
 
+/**
+ * wrapper for reusable workflows
+ * 
+ * @author benja
+ *
+ */
 public class Workflows {
 
-	private Framework framework = null;
+	/**
+	 * framework instance to have access to all pages
+	 */
+	private AutomationPracticeFramework framework = null;
 
-	public Workflows(Framework _framework) {
+	/**
+	 * constuctor to store framework
+	 * 
+	 * @param _framework
+	 */
+	public Workflows(AutomationPracticeFramework _framework) {
 		framework = _framework;
 
 	}
 
+	/**
+	 * Registration workflow.
+	 * 
+	 * TODO: this is a "perfect world example implementation" for real tests, this
+	 * one must implement more invalid data checks like, mail is well formatted
+	 * etc..
+	 * 
+	 * @param user user that should be registered
+	 */
 	public void signUpUser(User user) {
-		framework.pages.Home.goTo();
-		framework.getWait().until(ExpectedConditions.visibilityOfElementLocated(framework.pages.Home.btnLogin()))
+		framework.getPages().Home.goTo();
+		framework.getWait().until(ExpectedConditions.visibilityOfElementLocated(framework.getPages().Home.btnLogin()))
 				.click();
-		assertTrue(framework.pages.Authentication.isAt());
-		framework.getDriver().findElement(framework.pages.Authentication.inputEmail()).sendKeys(user.email);
-		framework.getDriver().findElement(framework.pages.Authentication.inputSubmitCreate()).click();
+		assertTrue(framework.getPages().Authentication.isAt());
+		framework.getDriver().findElement(framework.getPages().Authentication.inputEmail()).sendKeys(user.email);
+		framework.getDriver().findElement(framework.getPages().Authentication.inputSubmitCreate()).click();
 
 		if (user.male) {
-			framework.getWait()
-					.until(ExpectedConditions.visibilityOfElementLocated(framework.pages.Authentication.inputMale()))
+			framework.getWait().until(
+					ExpectedConditions.visibilityOfElementLocated(framework.getPages().Authentication.inputMale()))
 					.click();
 		} else {
-			framework.getWait()
-					.until(ExpectedConditions.visibilityOfElementLocated(framework.pages.Authentication.inputFemale()))
+			framework.getWait().until(
+					ExpectedConditions.visibilityOfElementLocated(framework.getPages().Authentication.inputFemale()))
 					.click();
 		}
-		framework.getDriver().findElement(framework.pages.Authentication.inputCustomer_firstname()).sendKeys(user.name);
-		framework.getDriver().findElement(framework.pages.Authentication.inputCustomer_lastname())
+		framework.getDriver().findElement(framework.getPages().Authentication.inputCustomer_firstname())
+				.sendKeys(user.name);
+		framework.getDriver().findElement(framework.getPages().Authentication.inputCustomer_lastname())
 				.sendKeys(user.surname);
-		framework.getDriver().findElement(framework.pages.Authentication.inputPasswd()).sendKeys(user.passwd);
-		framework.pages.Authentication.selectDays().selectByValue("" + user.birth_day);
-		framework.pages.Authentication.selectMonths().selectByValue("" + user.birth_month);
-		framework.pages.Authentication.selectYears().selectByValue("" + user.birth_year);
-		framework.getDriver().findElement(framework.pages.Authentication.inputCompany()).sendKeys(user.company);
-		framework.getDriver().findElement(framework.pages.Authentication.inputAddress1()).sendKeys(user.adress1);
-		framework.getDriver().findElement(framework.pages.Authentication.inputAddress2()).sendKeys(user.adress2);
-		framework.getDriver().findElement(framework.pages.Authentication.inputCity()).sendKeys(user.city);
-		framework.pages.Authentication.selectState().selectByVisibleText(user.state);
-		framework.getDriver().findElement(framework.pages.Authentication.inputPostcode()).sendKeys(user.zip);
-		framework.getDriver().findElement(framework.pages.Authentication.inputOther()).sendKeys(user.other);
-		framework.getDriver().findElement(framework.pages.Authentication.inputPhone()).sendKeys(user.phone);
-		framework.getDriver().findElement(framework.pages.Authentication.inputPhone_mobile())
+		framework.getDriver().findElement(framework.getPages().Authentication.inputPasswd()).sendKeys(user.passwd);
+		framework.getPages().Authentication.selectDays().selectByValue("" + user.birth_day);
+		framework.getPages().Authentication.selectMonths().selectByValue("" + user.birth_month);
+		framework.getPages().Authentication.selectYears().selectByValue("" + user.birth_year);
+		framework.getDriver().findElement(framework.getPages().Authentication.inputCompany()).sendKeys(user.company);
+		framework.getDriver().findElement(framework.getPages().Authentication.inputAddress1()).sendKeys(user.adress1);
+		framework.getDriver().findElement(framework.getPages().Authentication.inputAddress2()).sendKeys(user.adress2);
+		framework.getDriver().findElement(framework.getPages().Authentication.inputCity()).sendKeys(user.city);
+		framework.getPages().Authentication.selectState().selectByVisibleText(user.state);
+		framework.getDriver().findElement(framework.getPages().Authentication.inputPostcode()).sendKeys(user.zip);
+		framework.getDriver().findElement(framework.getPages().Authentication.inputOther()).sendKeys(user.other);
+		framework.getDriver().findElement(framework.getPages().Authentication.inputPhone()).sendKeys(user.phone);
+		framework.getDriver().findElement(framework.getPages().Authentication.inputPhone_mobile())
 				.sendKeys(user.phone_mobile);
-		framework.getDriver().findElement(framework.pages.Authentication.inputAlias()).sendKeys(user.alias);
+		framework.getDriver().findElement(framework.getPages().Authentication.inputAlias()).sendKeys(user.alias);
 
-		framework.getDriver().findElement(framework.pages.Authentication.inputSubmitAccount()).click();
+		framework.getDriver().findElement(framework.getPages().Authentication.inputSubmitAccount()).click();
 
 	}
 
+	/**
+	 * Login an exisiting user with given mail and pass
+	 * 
+	 * @param user user with initialized mail and pass
+	 * 
+	 * @return true: user is logged in now. false: is not logged in now. something
+	 *         failed
+	 */
 	public boolean signInUser(User user) {
 
 		if (isSignedIn())
@@ -74,22 +106,41 @@ public class Workflows {
 		return isSignedIn();
 	}
 
+	/**
+	 * function to logout some user from the page
+	 * 
+	 * @return should allways return false, since user is logged out allready, or
+	 *         becomes
+	 */
 	public boolean logoutUser() {
 		if (isSignedIn()) {
-			framework.pages.Account.goTo();
+			framework.getPages().Account.goTo();
 			framework.getWait()
-					.until(ExpectedConditions.visibilityOfElementLocated(framework.pages.Account.input_logout()))
+					.until(ExpectedConditions.visibilityOfElementLocated(framework.getPages().Account.input_logout()))
 					.click();
 		}
-		return false;
+		return isSignedIn();
 	}
 
+	/**
+	 * runs js isLogged to check wheater we are logged in or not (prestashop)
+	 * 
+	 * @return
+	 */
 	public boolean isSignedIn() {
-		return framework.pages.Any.execScript("return isLogged").equals("1");
+		return framework.getPages().getAny().execScript("return isLogged").equals("1");
 	}
 
+	/**
+	 * runs checkout with user, payment, shipping and products.
+	 * 
+	 * @param user
+	 * @param payment
+	 * @param shipping
+	 * @param products
+	 */
 	public void checkout(User user, Payment payment, Shipping shipping, List<Article> products) {
-		framework.pages.Home.goTo();
+		framework.getPages().Home.goTo();
 
 		if (isSignedIn() && !isUserSignedIn(user)) {
 			logoutUser();
@@ -98,20 +149,27 @@ public class Workflows {
 
 		for (Article product : products) {
 
-			framework.pages.Product.goToSpecific(product.productId);
-			if (framework.pages.Product.isAtSpecific(product.productId) && framework.pages.Product.isBuyable()) {
-				framework.pages.Product.AddToCart();
+			framework.getPages().Product.goToSpecific(product.getProductId());
+			if (framework.getPages().Product.isAtSpecific(product.getProductId())
+					&& framework.getPages().Product.isBuyable()) {
+				framework.getPages().Product.AddToCart();
 			}
 
 		}
 
-		framework.pages.Cart.goTo();
-		framework.pages.Cart.proceedToCheckout();
+		framework.getPages().Cart.goTo();
+		framework.getPages().Cart.proceedToCheckout();
 
-		framework.pages.Order.Process(payment, shipping);
+		framework.getPages().Order.Process(payment, shipping);
 
 	}
 
+	/**
+	 * checks weather a specific user is logged in
+	 * 
+	 * @param user
+	 * @return
+	 */
 	private boolean isUserSignedIn(User user) {
 		String username = framework.getDriver().findElement(By.className("account")).getText();
 

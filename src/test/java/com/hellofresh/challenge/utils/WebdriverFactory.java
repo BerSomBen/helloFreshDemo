@@ -9,12 +9,13 @@ import io.github.bonigarcia.wdm.DriverManagerType;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 
 public class WebdriverFactory {
-
-	// Get a new WebDriver Instance.
-	// There are various implementations for this depending on browser. The required
-	// browser can be set as an environment variable.
-	// Refer
-	// http://getgauge.io/documentation/user/current/managing_environments/README.html
+	/**
+	 * static getter to avoid committing static chromedriver, firefoxdriver etc.
+	 * towards sourcecode.
+	 * 
+	 * @param browser
+	 * @return
+	 */
 	public static WebDriver getDriver(String browser) {
 
 		if (browser == null) {

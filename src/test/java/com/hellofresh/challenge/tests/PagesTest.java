@@ -8,13 +8,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.hellofresh.challenge.framework.Framework;
+import com.hellofresh.challenge.framework.AutomationPracticeFramework;
 
+/**
+ * Tests the page pattern implemented
+ * 
+ * @author benja
+ *
+ */
 public class PagesTest {
 
 	static WebDriver driver;
 	static WebDriverWait wait;
-	static Framework framework;
+	static AutomationPracticeFramework framework;
 
 	@BeforeClass
 	public static void setUp() {
@@ -24,31 +30,31 @@ public class PagesTest {
 		wait = new WebDriverWait(driver, 10, 50);
 
 		driver.get("http://www.google.de");
-		framework = new Framework(driver, wait);
+		framework = new AutomationPracticeFramework(driver, wait);
 	}
 
 	@Test
 	public void test_Index_GoTo() {
-		framework.pages.Home.goTo();
-		assertTrue(framework.pages.Home.isAt());
+		framework.getPages().Home.goTo();
+		assertTrue(framework.getPages().Home.isAt());
 	}
 
 	@Test
 	public void test_Category_GoTo() {
-		framework.pages.Category.goTo();
-		assertTrue(framework.pages.Category.isAt());
+		framework.getPages().Category.goTo();
+		assertTrue(framework.getPages().Category.isAt());
 	}
 
 	@Test
 	public void test_Product_GoTo() {
-		framework.pages.Product.goTo();
-		assertTrue(framework.pages.Product.isAt());
+		framework.getPages().Product.goTo();
+		assertTrue(framework.getPages().Product.isAt());
 	}
 
 	@Test
 	public void test_Authentification_GoTo() {
-		framework.pages.Authentication.goTo();
-		assertTrue(framework.pages.Authentication.isAt());
+		framework.getPages().Authentication.goTo();
+		assertTrue(framework.getPages().Authentication.isAt());
 	}
 
 }

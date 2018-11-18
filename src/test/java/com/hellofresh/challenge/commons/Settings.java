@@ -11,13 +11,25 @@ import java.util.Properties;
  *
  */
 public class Settings {
-	public static String browser = new String();
+	/**
+	 * Browser val from config.prop
+	 */
+	public static String BROWSER = new String();
+	/**
+	 * homeurl val from config.prop
+	 */
 	public static String HOMEURL = new String();
+	/**
+	 * sample prodId from config.prop
+	 */
 	public static String SAMPLEPRODUCTID = new String();
+	/**
+	 * sample cat id form comfig.prop
+	 */
 	public static String SAMPLECATEGORYID = new String();
 
 	/**
-	 * Load settings from config.properties
+	 * Load settings from config.properties into static members.
 	 */
 	public static void load() {
 		try {
@@ -26,7 +38,7 @@ public class Settings {
 			appSettings.load(fis); // load config.properties file
 
 			// This is where you add your config variables:
-			browser = (String) appSettings.get("browser");
+			BROWSER = (String) appSettings.get("browser");
 			HOMEURL = (String) appSettings.get("HOMEURL");
 			SAMPLEPRODUCTID = (String) appSettings.get("SAMPLEPRODUCTID");
 			SAMPLECATEGORYID = (String) appSettings.get("SAMPLECATEGORYID");
