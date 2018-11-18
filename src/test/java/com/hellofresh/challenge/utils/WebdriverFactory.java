@@ -3,12 +3,10 @@ package com.hellofresh.challenge.utils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.DriverManagerType;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
-import io.github.bonigarcia.wdm.InternetExplorerDriverManager;
 
 public class WebdriverFactory {
 
@@ -17,16 +15,13 @@ public class WebdriverFactory {
 	// browser can be set as an environment variable.
 	// Refer
 	// http://getgauge.io/documentation/user/current/managing_environments/README.html
-	public static WebDriver getDriver(String browser ) {
+	public static WebDriver getDriver(String browser) {
 
 		if (browser == null) {
 			ChromeDriverManager.getInstance(DriverManagerType.CHROME).setup();
 			return new ChromeDriver();
 		}
 		switch (browser) {
-		case "IE":
-			InternetExplorerDriverManager.getInstance(DriverManagerType.IEXPLORER).setup();
-			return new InternetExplorerDriver();
 		case "FIREFOX":
 			FirefoxDriverManager.getInstance(DriverManagerType.FIREFOX).setup();
 			return new FirefoxDriver();
