@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.hellofresh.challenge.commons.Settings;
 import com.hellofresh.challenge.framework.Framework;
 
-public class CommonTests {
+public class CommonTest {
 
 	ChromeDriver driver;
 

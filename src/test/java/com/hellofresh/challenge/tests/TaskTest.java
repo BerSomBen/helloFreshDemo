@@ -26,7 +26,7 @@ import com.hellofresh.challenge.enums.Shipping;
 import com.hellofresh.challenge.framework.Framework;
 import com.hellofresh.challenge.utils.WebdriverFactory;
 
-public class TaskTests {
+public class TaskTest {
 
 	static WebDriver driver;
 	static WebDriverWait wait;

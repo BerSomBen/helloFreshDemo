@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.hellofresh.challenge.framework.Framework;
 
-public class PagesTests {
+public class PagesTest {
 
 	static WebDriver driver;
 	static WebDriverWait wait;
