@@ -13,7 +13,7 @@ With page pattern, I was able to think of what tests I wanna write and was able 
 know anything about the frontend at all. When a new frontend comes into process, I was able to glue the frontend 
 onto the framework and link them to the tests. 
  
-## Dependencies
+## requirements
 
 This solution is build in java, to run, you need at least a jre 1.8, since I use maven,
 you will need a jdk 1.8 and the latest maven in the path. 
@@ -23,12 +23,11 @@ installed on your machine.
 ## How to run
 
 Just clone the repo, run 
-	```
-	maven clean build
-	```
-	```
-	maven test
-	```
+	
+	```mvn clean build```
+	
+	```mvn test```
+	
 done. 
 Chromedriver, firefoxdriver, majonette etc are done via webdrivermanager from bonigarcia. probs to him. 
 
