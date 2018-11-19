@@ -24,9 +24,9 @@ installed on your machine.
 
 Just clone the repo, run 
 	
-	```mvn clean build```
+	mvn clean build
 	
-	```mvn test```
+	mvn test
 	
 done. 
 Chromedriver, firefoxdriver, majonette etc are done via webdrivermanager from bonigarcia. probs to him. 
