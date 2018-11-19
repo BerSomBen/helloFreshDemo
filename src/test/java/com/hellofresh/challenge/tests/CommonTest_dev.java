@@ -19,7 +19,7 @@ import com.hellofresh.challenge.framework.AutomationPracticeFramework;
  * @author benja
  *
  */
-public class CommonTest {
+public class CommonTest_dev {
 
 	ChromeDriver driver;
 

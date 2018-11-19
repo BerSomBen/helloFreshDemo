@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.PropertyConfigurator;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -42,6 +43,11 @@ public class TaskTest {
 
 	@Rule
 	public ScreenshotTestRule screenshotTestRule = new ScreenshotTestRule(driver);
+
+	@AfterClass
+	public static void TearDown() {
+		driver.quit();
+	}
 
 	@BeforeClass
 	public static void setUp() {

@@ -16,7 +16,7 @@ import com.hellofresh.challenge.framework.AutomationPracticeFramework;
  * @author benja
  *
  */
-public class PagesTest {
+public class PagesTest_dev {
 
 	static WebDriver driver;
 	static WebDriverWait wait;

@@ -1,7 +1,6 @@
 package com.hellofresh.challenge.framework;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
