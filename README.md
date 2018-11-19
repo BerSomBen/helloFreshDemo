@@ -25,6 +25,8 @@ installed on your machine.
 Just clone the repo, run 
 	```
 	maven clean build
+	```
+	```
 	maven test
 	```
 done. 
